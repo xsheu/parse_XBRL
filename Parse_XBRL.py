@@ -283,7 +283,7 @@ for component in f:
     ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,kuiper2dconclude)
     KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
     KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
-    output_string = component[32,:]+" "+str(ymin1d)+" "+str(ymax1d)+" "+str(ymin2d)+" "+str(ymax2d)
+    output_string = component[32:]+" "+str(ymin1d)+" "+str(ymax1d)+" "+str(ymin2d)+" "+str(ymax2d)
     fo.write(output_string)
 f.close()
 fo.close()    
