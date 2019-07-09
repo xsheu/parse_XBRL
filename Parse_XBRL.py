@@ -148,26 +148,26 @@ def KolmogorovSmirnov(itype,actual,theoret):
 def mad_conclude(itype,value):
     if(itype==1):
         if(value<=0.006):
-            return "green"
+            return 1.0
         else:
             if(value<=0.012):
-                return "green"
+                return 1.0/3.0
             else:
                 if(value<=0.015):
-                    return "yellow"
+                    return -1.0/3.0
                 else:
-                    return "red"
+                    return -1.0
     else:
         if(value<=0.012):
-            return "green"
+            return 1.0
         else:
             if(value<=0.018):
-                return "green"
+                return 1.0/3.0
             else:
                 if(value<=0.022):
-                    return "yellow"
+                    return -1.0/3.0
                 else:
-                    return "red"   
+                    return -1.0   
 
 def chi_conclude(itype,level,value):
     critical_value=0.0
@@ -194,9 +194,9 @@ def chi_conclude(itype,level,value):
                 else:
                     critical_value=135.948          
     if(value>=critical_value):
-        return "red"
+        return -1.0
     else:
-        return "green"
+        return 1.0
 
 def Kuiper_conclude(value,total):
     critical_value=0.0
@@ -211,9 +211,9 @@ def Kuiper_conclude(value,total):
             else:
                 critical_value=2.303      
     if(value>=critical_value/math.sqrt(total)):
-        return "red"
+        return -1.0
     else:
-        return "green"
+        return 1.0
     
 def KolmogorovSmirnov_conclude(value,total):
     critical_value=0.0
@@ -228,9 +228,9 @@ def KolmogorovSmirnov_conclude(value,total):
             else:
                 critical_value=1.95      
     if(value>=critical_value/math.sqrt(total)):
-        return "red"
+        return -1.0
     else:
-        return "green" 
+        return 1.0
         
 file_str = "/Users/xsheu/eclipse-workspace/parse_XBRL/filelist.txt"
 xbrl_str=""
@@ -239,11 +239,11 @@ f=open(file_str)
 for component in f:
     digital = [0.0 for i in range(99)]
     actual = [0.0 for i in range(99)]
-    digital_theo = [0.0 for i in range(99)]
+    theoretical_digital = [0.0 for i in range(99)]
     theoretical_value = [0.0 for i in range(99)]
     for j in range(1,99):
         value=theoretical(1,j,0.0,0.0)
-        digital_theo[j]=value
+        theoretical_digital[j]=value
     total,digital = xbrl_parse(xbrl_str)
     opinion=1
     level=0.1
