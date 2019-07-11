@@ -26,7 +26,7 @@ def xbrl_parse(xbrl_str):
                             digits[firsttwo_pos-1]+=1
                             total+=1
         except:
-            return 0,0                   
+            return -1,0                   
     for j in range(99):
         digits[j]=digits[j]/total
     return total, digits
@@ -252,37 +252,43 @@ for component in f:
         value=theoretical(1,j,0.0,0.0)
         theoretical_digital[j]=value
     total,digital = xbrl_parse(component)
-    opinion=1
-    level=0.1
-    c=0.0
-    n=0.0
-    actual,theoretical_value=cumulative(opinion,digital,c,n)
-    KolmogorovSmirnov1d=0
-    mad1d=mad(1,1,digital,c,n)
-    chi1d=chi(1,1,digital,c,n,total)
-    kuiper1d=Kuiper(1,actual,theoretical_value)
-    KolmogorovSmirnov1d=KolmogorovSmirnov(1,actual,theoretical_value)
-    mad1dconclude=mad_conclude(1,mad1d)
-    ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,mad1dconclude)
-    chi1dconclude=chi_conclude(1,level,chi1d)
-    ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,chi1dconclude)
-    kuiper1dconclude=Kuiper_conclude(kuiper1d,total)
-    ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,kuiper1dconclude)
-    KolmogorovSmirnov1dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov1d,total)
-    ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,KolmogorovSmirnov1dconclude)
-    KolmogorovSmirnov2d=0
-    mad2d=mad(2,1,digital,c,n)
-    chi2d=chi(2,1,digital,c,n,total)
-    kuiper2d=Kuiper(2,actual,theoretical_value)
-    KolmogorovSmirnov2d=KolmogorovSmirnov(2,actual,theoretical_value)
-    mad2dconclude=mad_conclude(2,mad2d)
-    ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,mad2dconclude)
-    chi2dconclude=chi_conclude(2,level,chi2d)
-    ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,chi2dconclude)
-    kuiper2dconclude=Kuiper_conclude(kuiper2d,total)
-    ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,kuiper2dconclude)
-    KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
-    KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
+    if(total != -1):
+        opinion=1
+        level=0.1
+        c=0.0
+        n=0.0
+        actual,theoretical_value=cumulative(opinion,digital,c,n)
+        KolmogorovSmirnov1d=0
+        mad1d=mad(1,1,digital,c,n)
+        chi1d=chi(1,1,digital,c,n,total)
+        kuiper1d=Kuiper(1,actual,theoretical_value)
+        KolmogorovSmirnov1d=KolmogorovSmirnov(1,actual,theoretical_value)
+        mad1dconclude=mad_conclude(1,mad1d)
+        ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,mad1dconclude)
+        chi1dconclude=chi_conclude(1,level,chi1d)
+        ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,chi1dconclude)
+        kuiper1dconclude=Kuiper_conclude(kuiper1d,total)
+        ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,kuiper1dconclude)
+        KolmogorovSmirnov1dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov1d,total)
+        ymin1d,ymax1d=ydetermine(ymin1d,ymax1d,KolmogorovSmirnov1dconclude)
+        KolmogorovSmirnov2d=0
+        mad2d=mad(2,1,digital,c,n)
+        chi2d=chi(2,1,digital,c,n,total)
+        kuiper2d=Kuiper(2,actual,theoretical_value)
+        KolmogorovSmirnov2d=KolmogorovSmirnov(2,actual,theoretical_value)
+        mad2dconclude=mad_conclude(2,mad2d)
+        ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,mad2dconclude)
+        chi2dconclude=chi_conclude(2,level,chi2d)
+        ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,chi2dconclude)
+        kuiper2dconclude=Kuiper_conclude(kuiper2d,total)
+        ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,kuiper2dconclude)
+        KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
+        KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
+    else:
+        ymin1d=-1.0
+        ymax1d=-1.0
+        ymin2d=-1.0
+        ymax2d=-1.0    
     output_string = component[32:]+" "+str(ymin1d)+" "+str(ymax1d)+" "+str(ymin2d)+" "+str(ymax2d)
     fo.write(output_string)
 f.close()
