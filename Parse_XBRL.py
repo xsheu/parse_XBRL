@@ -7,15 +7,15 @@ import math
 
 def xbrl_parse(xbrl_str):
     xbrl_file=open(xbrl_str)
+    total=0
+    digits=[0.0*i for i in range(99)]
     for lines in xbrl_file:
-        digits=[0.0*i for i in range(99)]
-        total=0
         try:
             line=lines.splitlines();
             for sentsence in line:
-                segment=sentsence.split(b">")
+                segment=sentsence.split("<")
                 for seperate in segment:
-                    data=seperate.split(b"<")
+                    data=seperate.split(">")
                     for seperate_string in data:
                         if(seperate_string.isdigit()):
                             leading=seperate_string[0:1]
@@ -229,7 +229,7 @@ def KolmogorovSmirnov_conclude(value,total):
 def ydetermine(ymin,ymax,value):
     if(value<=ymin):
         ymin=value
-    if(value>=ymax):
+    if(ymax>=value):
         ymax=value
     return ymin,ymax    
     
@@ -238,7 +238,7 @@ file_str = "/Users/xsheu/eclipse-workspace/parse_XBRL/filelist.txt"
 output_file="/Users/xsheu/Desktop/xbrl2018.txt"
 total=0
 f=open(file_str)
-fo=open(output_file)
+fo=open(output_file,"w")
 for component in f:
     digital = [0.0 for i in range(99)]
     actual = [0.0 for i in range(99)]
