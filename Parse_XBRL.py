@@ -239,6 +239,7 @@ output_file="/Users/xsheu/Desktop/xbrl2018.txt"
 total=0
 f=open(file_str)
 fo=open(output_file,"w")
+total_file=0
 for component in f:
     digital = [0.0 for i in range(99)]
     actual = [0.0 for i in range(99)]
@@ -285,6 +286,7 @@ for component in f:
         KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
         KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
         print("Audit the file: "+component[32:]+" Completed")
+        total_file+=1
     else:
         print("Audit the file: "+component[32:]+" encountered exceptions")
         ymin1d=-1.0
@@ -292,6 +294,8 @@ for component in f:
         ymin2d=-1.0
         ymax2d=-1.0    
     output_string = component[32:]+" "+str(ymin1d)+" "+str(ymax1d)+" "+str(ymin2d)+" "+str(ymax2d)
-    fo.write(output_string)
+    fo.write(output_string+"\n")
+fo.write("total files = "+str(total_file))
+print("total files = "+str(total_file))
 f.close()
 fo.close()    
