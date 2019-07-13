@@ -284,7 +284,9 @@ for component in f:
         ymin2d,ymax2d=ydetermine(ymin2d,ymax2d,kuiper2dconclude)
         KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
         KolmogorovSmirnov2dconclude=KolmogorovSmirnov_conclude(KolmogorovSmirnov2d,total)
+        print("Audit the file: "+component[32:]+" Completed")
     else:
+        print("Audit the file: "+component[32:]+" encountered exceptions")
         ymin1d=-1.0
         ymax1d=-1.0
         ymin2d=-1.0
